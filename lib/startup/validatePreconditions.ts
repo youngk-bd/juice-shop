@@ -104,6 +104,15 @@ const validatePreconditions = async ({ exitOnFailure = true } = {}) => {
 
   resolvePreconditionsReady()
 
+  if (!process.env.PASSWORD_RESET_HMAC_SECRET) {
+    logger.error(colors.red('Environment variable PASSWORD_RESET_HMAC_SECRET is required but not set!'))
+    if (exitOnFailure) {
+      logger.error(colors.red('Exiting due to missing required environment variable!'))
+      process.exit(1)
+    }
+    success = false
+  }
+
   if ((!success || !asyncConditions) && exitOnFailure) {
     logger.error(colors.red('Exiting due to unsatisfied precondition!'))
     process.exit(1)

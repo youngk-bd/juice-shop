@@ -197,10 +197,11 @@ void describe('insecurity', () => {
   })
 
   void describe('hmac', () => {
-    void it('returns SHA-256 HMAC with "pa4qacea4VK9t9nGv7yZtwmj" as salt any input string', () => {
-      assert.equal(security.hmac('admin123'), '6be13e2feeada221f29134db71c0ab0be0e27eccfc0fb436ba4096ba73aafb20')
-      assert.equal(security.hmac('password'), 'da28fc4354f4a458508a461fbae364720c4249c27f10fccf68317fc4bf6531ed')
-      assert.equal(security.hmac(''), 'f052179ec5894a2e79befa8060cfcb517f1e14f7f6222af854377b6481ae953e')
+    void it('returns SHA-256 HMAC with given secret as salt for any input string', () => {
+      process.env.PASSWORD_RESET_HMAC_SECRET = 'test-hmac-secret-for-unit-tests'
+      assert.equal(security.hmac('admin123'), 'adc4d016844e57a8760f520c21c7a26a0d5b2205ec655c35371e7ace148acb6b')
+      assert.equal(security.hmac('password'), '5bd48d6ddbd3a1c76b37a09a419a5c298bda2221a837aafa65abfabdb764271b')
+      assert.equal(security.hmac(''), '51949e59f07cb792af2d6d44e32ff28b080ddb7a2298b7474ab4ad5b83b1d800')
     })
   })
 })
