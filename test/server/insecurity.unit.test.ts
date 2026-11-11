@@ -5,6 +5,7 @@
 
 // @ts-expect-error FIXME no typescript definitions for z85 :(
 import z85 from 'z85'
+import crypto from 'node:crypto'
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import * as security from '../../lib/insecurity'
@@ -197,10 +198,13 @@ void describe('insecurity', () => {
   })
 
   void describe('hmac', () => {
-    void it('returns SHA-256 HMAC with "pa4qacea4VK9t9nGv7yZtwmj" as salt any input string', () => {
-      assert.equal(security.hmac('admin123'), '6be13e2feeada221f29134db71c0ab0be0e27eccfc0fb436ba4096ba73aafb20')
-      assert.equal(security.hmac('password'), 'da28fc4354f4a458508a461fbae364720c4249c27f10fccf68317fc4bf6531ed')
-      assert.equal(security.hmac(''), 'f052179ec5894a2e79befa8060cfcb517f1e14f7f6222af854377b6481ae953e')
+    void it('returns SHA-256 HMAC for any input string using secret from HMAC_SECRET env var', () => {
+      const secret = process.env.HMAC_SECRET
+      assert.ok(secret, 'HMAC_SECRET must be set')
+      const expectedHmac = (data: string) => crypto.createHmac('sha256', secret).update(data).digest('hex')
+      assert.equal(security.hmac('admin123'), expectedHmac('admin123'))
+      assert.equal(security.hmac('password'), expectedHmac('password'))
+      assert.equal(security.hmac(''), expectedHmac(''))
     })
   })
 })
