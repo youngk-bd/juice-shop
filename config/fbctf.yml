@@ -23,15 +23,6 @@ ctf:
     forgedReviewChallenge:
       name: Israel
       code: IL
-    loginAdminChallenge:
-      name: Russian Federation
-      code: RU
-    loginJimChallenge:
-      name: Honduras
-      code: HN
-    loginBenderChallenge:
-      name: Guatemala
-      code: GT
     localXssChallenge:
       name: Germany
       code: DE
