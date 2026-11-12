@@ -12,8 +12,8 @@ void describe('antiCheat', () => {
 
   void describe('calculateCheatScore', () => {
     void it('should return cheat score of 0 if challenge is tightly coupled to the previously solved one', () => {
-      const challenge1: Challenge = { key: 'loginAdminChallenge', difficulty: 1 } as any
-      const challenge2: Challenge = { key: 'weakPasswordChallenge', difficulty: 1 } as any
+      const challenge1: Challenge = { key: 'nullByteChallenge', difficulty: 1 } as any
+      const challenge2: Challenge = { key: 'easterEggLevelOneChallenge', difficulty: 1 } as any
 
       antiCheat.calculateCheatScore(challenge1)
       const score = antiCheat.calculateCheatScore(challenge2)
@@ -62,8 +62,8 @@ void describe('antiCheat', () => {
     })
 
     void it('should return the median cheat score of all solves', () => {
-      const challenge1: Challenge = { key: 'loginAdminChallenge', difficulty: 1 } as any
-      const challenge2: Challenge = { key: 'weakPasswordChallenge', difficulty: 1 } as any
+      const challenge1: Challenge = { key: 'nullByteChallenge', difficulty: 1 } as any
+      const challenge2: Challenge = { key: 'easterEggLevelOneChallenge', difficulty: 1 } as any
       const challenge3: Challenge = { key: 'missingEncodingChallenge', difficulty: 1 } as any
 
       antiCheat.calculateCheatScore(challenge1) // score 0 (first solve after seed)
